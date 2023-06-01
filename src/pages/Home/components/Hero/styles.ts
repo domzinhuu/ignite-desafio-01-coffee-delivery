@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import brandHeroBg from '../../../../assets/background_landpage.svg'
 
-export const HeroContainer = styled.main`
+export const HeroContainer = styled.div`
   display: flex;
   max-width: 1440px;
   margin: 0 auto;

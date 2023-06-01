@@ -38,5 +38,6 @@ export const NavItems = styled.nav`
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   }
 `
