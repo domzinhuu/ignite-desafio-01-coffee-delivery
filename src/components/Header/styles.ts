@@ -1,12 +1,17 @@
 import styled from 'styled-components'
 
 export const HeaderContainer = styled.header`
-  max-width: 1440px;
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 2rem 10rem;
+  position: fixed;
+  max-width: 1440px;
+  margin: 0 auto;
+  background-color: ${(props) => props.theme.background};
+  top: 0;
+  left: 0;
+  right: 0;
 `
 
 export const NavItems = styled.nav`
