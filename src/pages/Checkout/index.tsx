@@ -14,7 +14,6 @@ import {
   PaymentMethod,
 } from './styles'
 import { productList } from '../../data/product.list'
-import { Count } from '../../components/Count'
 import { CheckoutItem } from './components/CheckoutItem'
 import { FormHeader } from './components/CheckoutItem/FormHeader'
 import { useState } from 'react'

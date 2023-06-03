@@ -7,10 +7,12 @@ import { NavLink } from 'react-router-dom'
 export function Header() {
   return (
     <HeaderContainer>
-      <img
-        src={logo}
-        alt="logo do coffee delivery com um copo roxo com foguete desenhado e o nome da cafeteria a direita"
-      />
+      <NavLink to="/">
+        <img
+          src={logo}
+          alt="logo do coffee delivery com um copo roxo com foguete desenhado e o nome da cafeteria a direita"
+        />
+      </NavLink>
 
       <NavItems>
         <span>

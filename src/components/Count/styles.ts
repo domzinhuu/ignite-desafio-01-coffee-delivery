@@ -10,6 +10,11 @@ export const CountInput = styled.div`
   padding: 0%.5rem;
   height: 2.375rem;
 
+  .iconButton {
+    background: transparent;
+    width: auto;
+  }
+
   input {
     width: 1.25rem;
     height: 1.25rem;
