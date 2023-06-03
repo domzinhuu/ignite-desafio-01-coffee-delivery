@@ -8,6 +8,7 @@ import {
   ProductsContainer,
 } from './styles'
 import { productList } from '../../../../data/product.list'
+import { Count } from '../../../../components/Count'
 
 export function Products() {
   return (
@@ -51,11 +52,7 @@ export function Products() {
               </span>
 
               <div className="checkoutInput">
-                <CountInput>
-                  <Minus size={14} />
-                  <input type="number" min={1} step={1} value={0} />
-                  <Plus size={14} />
-                </CountInput>
+                <Count />
                 <button>
                   <ShoppingCart size={22} weight="fill" />
                 </button>

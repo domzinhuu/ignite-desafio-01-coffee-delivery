@@ -8,8 +8,8 @@ import { Router } from './Router'
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Header />
       <BrowserRouter>
+        <Header />
         <Router />
       </BrowserRouter>
       <GlobalStyle />

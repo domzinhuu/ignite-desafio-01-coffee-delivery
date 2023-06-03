@@ -18,13 +18,13 @@ export function Header() {
           Alegre, RS
         </span>
 
-        <button className="navlink">
+        <NavLink className="navlink" to="/checkout">
           <ShoppingCart
             size={22}
             weight="fill"
             color={defaultTheme['yellow-dark']}
           />
-        </button>
+        </NavLink>
       </NavItems>
     </HeaderContainer>
   )

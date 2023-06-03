@@ -10,7 +10,6 @@ export const GlobalStyle = createGlobalStyle`
     
     body{
         background: ${(props) => props.theme.background};
-        color: ${(props) => props.theme['base-text']};
         -webkit-font-smoothing: antialiased;
         max-width: 1440px;
         margin: 0 auto;
@@ -20,6 +19,7 @@ export const GlobalStyle = createGlobalStyle`
         font-family: 'Roboto', sans-serif;
         font-weight: 400;
         font-size: 1rem;
+        color: ${(props) => props.theme['base-text']};
         border: none;
     }
 
