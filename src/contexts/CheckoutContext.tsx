@@ -54,9 +54,6 @@ export function CheckoutContextProvider({ children }: any) {
     shipping = 0
   }
 
-  console.log('Frete: ', shipping)
-  console.log('Total: ', total)
-
   return (
     <CheckoutContext.Provider
       value={{

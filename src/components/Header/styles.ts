@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const HeaderContainer = styled.header`
+export const HeaderContainer = styled.header<{ totalProducts: number }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -14,7 +14,7 @@ export const HeaderContainer = styled.header`
   right: 0;
 `
 
-export const NavItems = styled.nav`
+export const NavItems = styled.nav<{ totalProducts: number }>`
   display: flex;
   gap: 0.75rem;
   align-items: center;
@@ -39,5 +39,26 @@ export const NavItems = styled.nav`
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    position: relative;
+
+    &.hasItems::before {
+      content: attr(data-total);
+      font-size: 0.75rem;
+      position: absolute;
+      right: -0.5rem;
+      top: -0.5rem;
+      font-weight: bold;
+      width: 1.25rem;
+      height: 1.25rem;
+      background: ${(props) => props.theme.purple};
+      color: ${(props) => props.theme.white};
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      line-height: 0;
+      padding-left: 1px;
+    }
   }
 `
