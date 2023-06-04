@@ -80,6 +80,10 @@ export const ProductItemContainer = styled.div`
           background-color: ${(props) => props.theme.purple};
         }
 
+        &:active {
+          background-color: ${(props) => props.theme['purple-dark']};
+        }
+
         &:disabled {
           background-color: ${(props) => props.theme['base-button']};
           color: ${(props) => props.theme['base-hover']};

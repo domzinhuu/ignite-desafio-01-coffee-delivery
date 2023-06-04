@@ -18,7 +18,8 @@ export const CheckoutItemContainer = styled.div`
     .actions {
       display: flex;
       gap: 0.5rem;
-      button {
+
+      .removeButton {
         background: ${(props) => props.theme['base-button']};
         border-radius: 6px;
         padding: 0 0.5rem;
@@ -27,6 +28,11 @@ export const CheckoutItemContainer = styled.div`
         gap: 0.25rem;
         font-size: 0.75rem;
         text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.2s;
+        &:hover {
+          background: ${(props) => props.theme['base-hover']};
+        }
         svg {
           color: ${(props) => props.theme.purple};
         }

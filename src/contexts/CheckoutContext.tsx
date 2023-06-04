@@ -14,12 +14,18 @@ interface CheckoutContextProps {
   total: number
   addProductToCheckout: (product: CheckoutProduct) => void
   removeProductFromCheckout: (product: CheckoutProduct) => void
+  currencyFormat: Intl.NumberFormat
 }
 
 export const CheckoutContext = createContext({} as CheckoutContextProps)
 
 export function CheckoutContextProvider({ children }: any) {
   const [products, setProducts] = useState<CheckoutProduct[]>([])
+
+  const format = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  })
 
   function handleAddProductToCheckout(item: CheckoutProduct) {
     item.subTotal = item.product.price * item.quantity
@@ -38,9 +44,11 @@ export function CheckoutContextProvider({ children }: any) {
   }
 
   function handleRemoveProductFromCheckout(product: CheckoutProduct) {
-    setProducts((prev) =>
-      prev.filter((prod) => prod.product.name === product.product.name),
+    const newList = products.filter(
+      (prod) => prod.product.name !== product.product.name,
     )
+    console.log(newList)
+    setProducts(() => [...newList])
   }
 
   let shipping = 0
@@ -49,7 +57,7 @@ export function CheckoutContextProvider({ children }: any) {
   total = sumBy(products, 'subTotal')
 
   if (total > 0 && total < 30) {
-    shipping = 3.5
+    shipping = 10
   } else if (total >= 30) {
     shipping = 0
   }
@@ -60,6 +68,7 @@ export function CheckoutContextProvider({ children }: any) {
         products,
         shipping,
         total,
+        currencyFormat: format,
         addProductToCheckout: handleAddProductToCheckout,
         removeProductFromCheckout: handleRemoveProductFromCheckout,
       }}

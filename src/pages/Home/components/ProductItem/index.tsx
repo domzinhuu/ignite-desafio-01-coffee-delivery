@@ -13,7 +13,7 @@ interface ProductItemProps {
 
 export function ProductItem({ product }: ProductItemProps) {
   const [prodCount, setProdCount] = useState<number>(0)
-  const { addProductToCheckout } = useContext(CheckoutContext)
+  const { addProductToCheckout, currencyFormat } = useContext(CheckoutContext)
 
   function handleChangeCount(value: number) {
     setProdCount(value)
@@ -44,9 +44,8 @@ export function ProductItem({ product }: ProductItemProps) {
 
       <div className="select">
         <span className="formatPrice">
-          R$
           <Title size="M" isBolder={true}>
-            {product.price}
+            {currencyFormat.format(product.price)}
           </Title>
         </span>
 

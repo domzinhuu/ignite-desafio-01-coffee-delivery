@@ -25,6 +25,12 @@ export const CheckoutContainer = styled.div`
       background: ${(props) => props.theme['base-button']};
       margin: 0 2.5rem;
     }
+
+    .items {
+      overflow-y: auto;
+      max-height: 42vh;
+      height: 100%;
+    }
   }
 
   .checkoutForm {
@@ -112,6 +118,7 @@ export const CheckoutValue = styled.div`
   width: 100%;
   flex-direction: column;
   padding: 1.5rem 2.5rem;
+  border-top: 1px solid ${(props) => props.theme['yellow-dark']};
 
   div {
     display: flex;
@@ -126,6 +133,16 @@ export const ConfirmButton = styled.button`
   border-radius: 6px;
   padding: 0.75rem 0.5rem;
   margin-top: 1.25rem;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+
+  &:hover {
+    background: ${(props) => props.theme.yellow};
+  }
+
+  &:active {
+    background: ${(props) => props.theme['yellow-dark']};
+  }
 `
 
 export const PaymentMethod = styled.div`
@@ -168,4 +185,11 @@ export const PaymentMethod = styled.div`
       }
     }
   }
+`
+
+export const EmptyCart = styled.div`
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

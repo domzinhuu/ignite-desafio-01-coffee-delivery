@@ -4,22 +4,23 @@ import {
   CurrencyDollar,
   MapPinLine,
   Money,
-  Trash,
 } from '@phosphor-icons/react'
 import { Text, Title } from '../../styles/themes/global'
 import {
   CheckoutContainer,
   CheckoutValue,
   ConfirmButton,
+  EmptyCart,
   PaymentMethod,
 } from './styles'
-import { productList } from '../../data/product.list'
 import { CheckoutItem } from './components/CheckoutItem'
 import { FormHeader } from './components/CheckoutItem/FormHeader'
-import { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { CheckoutContext } from '../../contexts/CheckoutContext'
 
 export function Checkout() {
-  const coffee = productList[0]
+  const { products, shipping, total, currencyFormat } =
+    useContext(CheckoutContext)
   const [paymentMethod, setPaymentMethod] = useState<string>('creditCard')
 
   return (
@@ -107,30 +108,42 @@ export function Checkout() {
         <Title size="XS">Cafés selecionados</Title>
 
         <div className="paymentCheckout">
-          <CheckoutItem />
-          <div className="separator"></div>
-          <CheckoutItem />
-          <div className="separator"></div>
-          <CheckoutValue>
-            <div>
-              <Text size="S">Total items</Text>
-              <Text size="M">R$ 29,70</Text>
-            </div>
-            <div>
-              <Text size="S">Entrega</Text>
-              <Text size="M">R$ 3,50</Text>
-            </div>
-            <div>
-              <Text size="L" isBold={true}>
-                Total
-              </Text>
-              <Text size="L" isBold={true}>
-                R$ 33,20
-              </Text>
-            </div>
+          <div className="items">
+            {products.map((prd) => (
+              <React.Fragment key={prd.product.name}>
+                <CheckoutItem item={prd} />
+                <div className="separator"></div>
+              </React.Fragment>
+            ))}
+          </div>
+          {products.length > 0 && (
+            <CheckoutValue>
+              <div>
+                <Text size="S">Total items</Text>
+                <Text size="M">{currencyFormat.format(total)}</Text>
+              </div>
+              <div>
+                <Text size="S">Entrega</Text>
+                <Text size="M">{currencyFormat.format(shipping)}</Text>
+              </div>
+              <div>
+                <Text size="L" isBold={true}>
+                  Total
+                </Text>
+                <Text size="L" isBold={true}>
+                  {currencyFormat.format(total + shipping)}
+                </Text>
+              </div>
 
-            <ConfirmButton>Confirmar Pedido</ConfirmButton>
-          </CheckoutValue>
+              <ConfirmButton>Confirmar Pedido</ConfirmButton>
+            </CheckoutValue>
+          )}
+
+          {products.length === 0 && (
+            <EmptyCart>
+              <Text size="L">Nenhum item no carrinho!</Text>
+            </EmptyCart>
+          )}
         </div>
       </div>
     </CheckoutContainer>
