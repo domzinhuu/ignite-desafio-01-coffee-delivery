@@ -2,9 +2,40 @@ import { CurrencyDollar, MapPin, Timer } from '@phosphor-icons/react'
 import { Text, Title } from '../../styles/themes/global'
 import { FinishedContainer, OrderLineData, SvgCircle } from './styles'
 import deliverySvg from '../../assets/delivery.svg'
+import { LottieOptions, useLottie } from 'lottie-react'
+import finishedCheckout from '../../assets/complete.json'
+import { useContext, useState } from 'react'
+import { CheckoutContext, PaymentType } from '../../contexts/CheckoutContext'
+
+const styles = {
+  width: '500px',
+}
 export function Finished() {
+  const options: LottieOptions = {
+    animationData: finishedCheckout,
+    onComplete: () => {
+      setShowAnimation(false)
+    },
+    loop: false,
+  }
+
+  const [showAnimation, setShowAnimation] = useState<boolean>(true)
+  const { View } = useLottie(options, styles)
+  const { deliveryAddress, paymentMethod } = useContext(CheckoutContext)
+
+  function formatPaymentMethod(paymentMethod: PaymentType) {
+    switch (paymentMethod) {
+      case PaymentType.CREDIT_CARD:
+        return 'Cartão de crédito'
+      case PaymentType.DEBIT_CARD:
+        return 'Carta de débito'
+      default:
+        return 'Dinheiro'
+    }
+  }
   return (
     <FinishedContainer>
+      {showAnimation && <div className="successAnimation">{View}</div>}
       <Title size="L" isBolder={true} color="yellow-dark">
         Uhu! Pedido confirmado
       </Title>
@@ -19,9 +50,15 @@ export function Finished() {
               </SvgCircle>
               <div>
                 <Text size="M">
-                  Entrega em <strong>Rua João Daniel Martinelli, 102</strong>
+                  Entrega em{' '}
+                  <strong>
+                    {deliveryAddress?.street}, {deliveryAddress?.number}
+                  </strong>
                 </Text>
-                <Text size="M">Farrapos - Porto Alegre, RS</Text>
+                <Text size="M">
+                  {deliveryAddress?.neighborhood} - {deliveryAddress?.city},{' '}
+                  {deliveryAddress?.uf}
+                </Text>
               </div>
             </OrderLineData>
             <OrderLineData>
@@ -42,7 +79,7 @@ export function Finished() {
               <div>
                 <Text size="M">Pagamento na entrega</Text>
                 <Text size="M">
-                  <strong>Cartão de Crédito</strong>
+                  <strong>{formatPaymentMethod(paymentMethod)}</strong>
                 </Text>
               </div>
             </OrderLineData>

@@ -9,8 +9,8 @@ import {
 } from './styles'
 import { CheckoutItem } from './components/CheckoutItem'
 import { FormHeader } from './components/CheckoutItem/FormHeader'
-import React, { useContext, useState } from 'react'
-import { CheckoutContext } from '../../contexts/CheckoutContext'
+import React, { FormEvent, useContext, useState } from 'react'
+import { CheckoutContext, PaymentType } from '../../contexts/CheckoutContext'
 import { AddressForm } from './components/AddressForm'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -32,9 +32,15 @@ const addressFormValidationSchema = z.object({
 type AddressFormProps = z.infer<typeof addressFormValidationSchema>
 
 export function Checkout() {
-  const { products, shipping, total, currencyFormat } =
-    useContext(CheckoutContext)
-  const [paymentMethod, setPaymentMethod] = useState<string>('creditCard')
+  const {
+    products,
+    shipping,
+    total,
+    currencyFormat,
+    paymentMethod,
+    changePaymentMethod,
+    doCheckout,
+  } = useContext(CheckoutContext)
 
   const addressForm = useForm<AddressFormProps>({
     resolver: zodResolver(addressFormValidationSchema),
@@ -48,13 +54,16 @@ export function Checkout() {
     },
   })
 
-  const { handleSubmit, formState } = addressForm
+  const { handleSubmit, formState, reset } = addressForm
 
   function handleCheckoutPayment(data: AddressFormProps) {
-    console.log(data)
-    console.log(formState)
+    doCheckout(data)
+    reset({ ...data })
   }
-  const isFormValid = formState.isValid
+
+  function handlePaymentChange(type: PaymentType) {
+    changePaymentMethod(type)
+  }
   return (
     <FormProvider {...addressForm}>
       <CheckoutContainer onSubmit={handleSubmit(handleCheckoutPayment)}>
@@ -74,7 +83,9 @@ export function Checkout() {
             <div className="paymentSelector">
               <label
                 htmlFor="creditCard"
-                className={paymentMethod === 'creditCard' ? 'selected' : ''}
+                className={
+                  paymentMethod === PaymentType.CREDIT_CARD ? 'selected' : ''
+                }
               >
                 <CreditCard size={16} />
                 <input
@@ -82,13 +93,15 @@ export function Checkout() {
                   id="creditCard"
                   name="paymentMethod"
                   value={paymentMethod}
-                  onClick={() => setPaymentMethod('creditCard')}
+                  onClick={() => handlePaymentChange(PaymentType.CREDIT_CARD)}
                 />
                 Cartão de crédito
               </label>
               <label
                 htmlFor="debitCard"
-                className={paymentMethod === 'debitCard' ? 'selected' : ''}
+                className={
+                  paymentMethod === PaymentType.DEBIT_CARD ? 'selected' : ''
+                }
               >
                 <Bank size={16} />
                 <input
@@ -96,13 +109,15 @@ export function Checkout() {
                   id="debitCard"
                   name="paymentMethod"
                   value={paymentMethod}
-                  onClick={() => setPaymentMethod('debitCard')}
+                  onClick={() => handlePaymentChange(PaymentType.DEBIT_CARD)}
                 />
                 Cartão de débito
               </label>
               <label
                 htmlFor="money"
-                className={paymentMethod === 'money' ? 'selected' : ''}
+                className={
+                  paymentMethod === PaymentType.MONEY ? 'selected' : ''
+                }
               >
                 <Money size={16} />
                 <input
@@ -110,7 +125,7 @@ export function Checkout() {
                   id="money"
                   name="paymentMethod"
                   value={paymentMethod}
-                  onClick={() => setPaymentMethod('money')}
+                  onClick={() => handlePaymentChange(PaymentType.MONEY)}
                 />
                 Dinheiro
               </label>
